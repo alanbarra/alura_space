@@ -1,4 +1,4 @@
-{% extends 'galeria/base.html' %} {% load static %} {% block content %}
+{% extends 'shared/base.html' %} {% load static %} {% block content %}
 
 <div class="pagina-inicial">
   <header class="cabecalho">
@@ -22,34 +22,11 @@
     </div>
   </header>
   <main class="principal">
-    <section class="menu-lateral">
-      <nav class="menu-lateral__navegacao">
-        <a href="{% url 'index' %}"
-          ><img src="{% static '/assets/ícones/1x/Home - ativo.png' %}" />
-          Home</a
-        >
-        <a href="#"
-          ><img
-            src="{% static '/assets/ícones/1x/Mais vistas - inativo.png' %}"
-          />
-          Mais vistas</a
-        >
-        <a href="#"
-          ><img src="{% static '/assets/ícones/1x/Novas - inativo.png' %}" />
-          Novas</a
-        >
-        <a href="#"
-          ><img
-            src="{% static '/assets/ícones/1x/Surpreenda-me - inativo.png' %}"
-          />
-          Surpreenda-me</a
-        >
-      </nav>
-    </section>
+    {% include 'partials/_menu.html' %}
+
     <section class="conteudo">
       <section class="imagem">
         <div class="imagem__conteudo">
-
           {% if fotografia.foto == "" or fotografia.foto == null %}
           <img
             class="card__imagem"
@@ -57,11 +34,7 @@
             alt="foto"
           />
           {% else %}
-          <img
-            class="card__imagem"
-            src="{{fotografia.foto.url}}"
-            alt="foto"
-          />
+          <img class="card__imagem" src="{{fotografia.foto.url}}" alt="foto" />
           {% endif %}
 
           <div class="imagem__info">
@@ -69,6 +42,18 @@
               <p class="imagem__titulo">{{ fotografia.nome }}</p>
               <p class="imagem__descricao">{{ fotografia.legenda }}</p>
               <p class="imagem__texto">{{ fotografia.descricao }}</p>
+            </div>
+            <div>
+              <a href="{% url 'editar_imagem' fotografia.id %}">
+                <button class="btn btn-success col-12" style="padding: top 5px">
+                  Editar
+                </button>
+              </a>
+              <a href="{% url 'deletar_imagem' fotografia.id %}">
+                <button class="btn btn-danger col-12" style="padding: top 5px">
+                  Deletar
+                </button>
+              </a>
             </div>
           </div>
         </div>
